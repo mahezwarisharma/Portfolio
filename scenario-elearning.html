@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scenario-Based eLearning: Difficult Stakeholder Conversation — Maheshwari S</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .obj-box{
+    background:var(--teal-tint);
+    border-left:3px solid var(--teal);
+    padding:16px 20px;
+    margin-bottom:36px;
+    font-size:15px;
+  }
+  .obj-box b{color:var(--teal-deep);}
+
+  .stage{
+    background:var(--ivory-deep);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:30px 32px;
+    margin-bottom:30px;
+  }
+  .scene-tag{
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:13.5px;
+    display:block;
+    margin-bottom:10px;
+  }
+  .scene-text{
+    font-size:16.5px;
+    margin:0 0 22px;
+    max-width:60ch;
+  }
+  .scene-text b{color:var(--ink);}
+  .choices{display:flex;flex-direction:column;gap:10px;}
+  .choice{
+    text-align:left;
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:5px;
+    padding:13px 16px;
+    font-size:15px;
+    font-family:inherit;
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .choice:hover{border-color:var(--teal);}
+
+  .consequence{
+    border-left:3px solid var(--gold);
+    background:var(--gold-tint);
+    padding:14px 18px;
+    margin-bottom:20px;
+    font-size:14.5px;
+    color:var(--ink);
+    display:none;
+  }
+  .consequence.show{display:block;}
+  .consequence b{color:var(--teal-deep);}
+
+  .restart-row{text-align:center;margin-top:6px;}
+  .quiz-btn{
+    background:var(--teal-deep);
+    color:#fff;
+    border:none;
+    padding:9px 20px;
+    border-radius:5px;
+    font-size:14px;
+    cursor:pointer;
+    font-family:inherit;
+  }
+
+  .track{
+    display:flex;
+    gap:6px;
+    margin-bottom:22px;
+  }
+  .track .dot{
+    flex:1;
+    height:5px;
+    border-radius:3px;
+    background:var(--rule);
+  }
+  .track .dot.done{background:var(--teal);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="crumb"><a href="../index.html">← Back to portfolio</a></div>
+
+  <header class="pagehead">
+    <div class="kicker">Case Study · Branching Scenario</div>
+    <h1>Handling a Difficult Stakeholder Conversation</h1>
+    <p>A single decision point, three ways to handle it, three different outcomes — no single choice is
+      flagged "wrong," each shows a realistic consequence so the learner builds judgment rather than
+      memorizes an answer key.</p>
+  </header>
+
+  <div class="obj-box">
+    <b>Learning objective:</b> Given a stakeholder pushing back on a project timeline, the learner can choose
+    a response that keeps the relationship and the project on track.
+  </div>
+
+  <div class="track" id="track">
+    <div class="dot" id="dot1"></div>
+    <div class="dot" id="dot2"></div>
+    <div class="dot" id="dot3"></div>
+  </div>
+
+  <div class="stage" id="stage"></div>
+</div>
+
+<footer class="site">Maheshwari S — Instructional Design Portfolio</footer>
+
+<script>
+  const SCENES = {
+    start: {
+      tag: "Scene 1 · The message",
+      text: "You're leading a course-content project. A senior stakeholder messages: <b>\u201CThis is taking too long. I need the module live by Friday \u2014 cut whatever you need to cut.\u201D</b> You know cutting the review step risks factual errors in the final content.<br><br>How do you respond?",
+      choices: [
+        { label: "Agree immediately and skip the SME review to hit Friday.", next: "skip" },
+        { label: "Push back firmly: the deadline isn't realistic, full stop.", next: "pushback" },
+        { label: "Propose a smaller, review-safe scope that still ships Friday.", next: "propose" }
+      ]
+    },
+    skip: {
+      tag: "Scene 2 · Consequence",
+      consequence: "Two days later, an SME flags a factual error in the live module \u2014 already seen by 40 learners. You're now fixing it publicly, and the stakeholder's trust in your process has dropped.",
+      text: "The stakeholder asks: <b>\u201CHow do we make sure this doesn't happen again?\u201D</b> What now?",
+      choices: [
+        { label: "Explain that review exists precisely to catch this, and rebuild it into future timelines.", next: "end_learn" },
+        { label: "Promise to work faster next time so review can still be skipped.", next: "end_repeat" }
+      ]
+    },
+    pushback: {
+      tag: "Scene 2 · Consequence",
+      consequence: "The stakeholder goes quiet, then escalates to your manager: \u201CThey're not being flexible.\u201D You're now defending your position without having offered any alternative.",
+      text: "Your manager asks you to re-engage the stakeholder directly. What now?",
+      choices: [
+        { label: "Reopen with a specific trade-off: full review by Monday, or a lighter-review version by Friday.", next: "end_learn" },
+        { label: "Hold the same position \u2014 the timeline is simply not realistic.", next: "end_stuck" }
+      ]
+    },
+    propose: {
+      tag: "Scene 2 · Consequence",
+      consequence: "The stakeholder replies: \u201COkay \u2014 that works, as long as it's live Friday.\u201D You've kept the deadline conversation open instead of a flat yes or no.",
+      text: "You scope the module down to the two highest-priority sections, keep the SME review intact, and ship the rest the following week. What's the outcome?",
+      choices: [
+        { label: "See the result", next: "end_best" }
+      ]
+    },
+    end_learn: {
+      tag: "Outcome",
+      text: "<b>Recovered.</b> You've rebuilt the review step into the process and the stakeholder relationship holds \u2014 but it took a public error to get here.",
+      final: true
+    },
+    end_repeat: {
+      tag: "Outcome",
+      text: "<b>Unresolved.</b> Without addressing the root cause, review gets skipped again next sprint \u2014 the same error is now more likely.",
+      final: true
+    },
+    end_stuck: {
+      tag: "Outcome",
+      text: "<b>Stalled.</b> No trade-off was offered, so the deadline pressure hasn't actually gone away \u2014 it's just been deferred to the next conversation.",
+      final: true
+    },
+    end_best: {
+      tag: "Outcome",
+      text: "<b>Best outcome.</b> The deadline held, the review process stayed intact, and the stakeholder saw you protect quality without simply saying no.",
+      final: true
+    }
+  };
+
+  let history = [];
+
+  function renderScene(key){
+    const s = SCENES[key];
+    const stage = document.getElementById('stage');
+    let html = `<span class="scene-tag">${s.tag}</span>`;
+    if (s.consequence) html += `<div class="consequence show"><b>What happened:</b> ${s.consequence}</div>`;
+    html += `<p class="scene-text">${s.text}</p>`;
+    if (s.final){
+      html += `<div class="restart-row"><button class="quiz-btn" onclick="restart()">Try a different path</button></div>`;
+    } else {
+      html += `<div class="choices">`;
+      s.choices.forEach(c => {
+        html += `<button class="choice" onclick="choose('${c.next}')">${c.label}</button>`;
+      });
+      html += `</div>`;
+    }
+    stage.innerHTML = html;
+    updateTrack();
+  }
+
+  function updateTrack(){
+    ['dot1','dot2','dot3'].forEach((id,i) => {
+      document.getElementById(id).classList.toggle('done', i < history.length + 1);
+    });
+  }
+
+  function choose(next){
+    history.push(next);
+    renderScene(next);
+  }
+
+  function restart(){
+    history = [];
+    renderScene('start');
+  }
+
+  renderScene('start');
+</script>
+</body>
+</html>
