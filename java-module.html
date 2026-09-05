@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Fundamentals: Interactive Concept Module — Maheshwari S</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .obj-box{
+    background:var(--teal-tint);
+    border-left:3px solid var(--teal);
+    padding:16px 20px;
+    margin-bottom:36px;
+    font-size:15px;
+  }
+  .obj-box b{color:var(--teal-deep);}
+  section.step{
+    margin-bottom:44px;
+    padding-bottom:36px;
+    border-bottom:1px solid var(--rule);
+  }
+  section.step:last-of-type{border-bottom:none;}
+  .step-label{
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:14px;
+    margin-bottom:4px;
+    display:block;
+  }
+  h2{font-size:21px;margin:0 0 12px;}
+  p{font-size:15.5px;color:var(--ink);}
+
+  /* glossary term */
+  .term{
+    border-bottom:1.5px dotted var(--teal);
+    cursor:pointer;
+    font-weight:500;
+    color:var(--teal-deep);
+    background:none;
+    position:relative;
+  }
+  .term-pop{
+    display:none;
+    position:absolute;
+    left:0; top:100%;
+    margin-top:6px;
+    background:var(--ink);
+    color:var(--ivory);
+    font-size:13.5px;
+    padding:10px 14px;
+    border-radius:4px;
+    width:240px;
+    line-height:1.45;
+    z-index:5;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+  }
+  .term.open .term-pop{display:block;}
+
+  pre.code{
+    background:#22302C;
+    color:#EFE8D8;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13.5px;
+    padding:16px 18px;
+    border-radius:5px;
+    overflow-x:auto;
+    line-height:1.6;
+    margin:14px 0;
+  }
+  pre.code .kw{color:#8FD6C4;}
+  pre.code .cm{color:#9C9584;}
+
+  /* concept map */
+  .mapwrap{margin:20px 0;}
+  svg.map text{font-family:'IBM Plex Sans',sans-serif;}
+
+  /* quiz */
+  .quiz{
+    background:var(--ivory-deep);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:24px 26px;
+  }
+  .quiz h3{font-size:17px;margin:0 0 4px;}
+  .quiz .progress{font-size:13px;color:var(--ink-soft);margin-bottom:16px;}
+  .q-text{font-weight:500;margin-bottom:14px;font-size:15.5px;}
+  .opts{display:flex;flex-direction:column;gap:9px;margin-bottom:16px;}
+  .opt{
+    text-align:left;
+    padding:10px 14px;
+    border:1px solid var(--rule);
+    background:#fff;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:14.5px;
+    font-family:inherit;
+    color:var(--ink);
+  }
+  .opt:hover{border-color:var(--teal);}
+  .opt.correct{border-color:var(--teal);background:var(--teal-tint);color:var(--teal-deep);font-weight:500;}
+  .opt.wrong{border-color:#B5533F;background:#F6E4DF;color:#7A3324;}
+  .opt[disabled]{cursor:default;}
+  .quiz-btn{
+    background:var(--teal-deep);
+    color:#fff;
+    border:none;
+    padding:9px 20px;
+    border-radius:5px;
+    font-size:14px;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .quiz-btn:disabled{opacity:.4;cursor:default;}
+  .feedback{font-size:14px;margin-top:10px;min-height:20px;color:var(--ink-soft);}
+  .quiz-result{
+    display:none;
+    text-align:center;
+    padding:10px 0 4px;
+  }
+  .quiz-result .score{font-size:32px;font-family:'Source Serif 4',serif;color:var(--teal-deep);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="crumb"><a href="../index.html">← Back to portfolio</a></div>
+
+  <header class="pagehead">
+    <div class="kicker">Case Study · Technical Training</div>
+    <h1>Java Fundamentals: Interactive Concept Module</h1>
+    <p>A short lesson on Java control flow, sequenced with Bloom's Taxonomy — recall a term, see how the
+      pieces connect, then apply it in a quiz. Click any underlined term for a quick definition.</p>
+  </header>
+
+  <div class="obj-box">
+    <b>Learning objective:</b> By the end of this module, the learner can identify Java's core control-flow
+    structures and predict how a simple program will execute.
+  </div>
+
+  <section class="step">
+    <span class="step-label">Step 1 — Recall</span>
+    <h2>Key terms</h2>
+    <p>
+      Every Java program is a sequence of instructions run inside a
+      <span class="term" tabindex="0">method<span class="term-pop">A named block of code that performs a task. Every Java program starts running from a method called <code>main</code>.</span></span>.
+      Programs make decisions using a
+      <span class="term" tabindex="0">conditional<span class="term-pop">A statement — like <code>if</code> / <code>else</code> — that runs different code depending on whether something is true or false.</span></span>,
+      and repeat work using a
+      <span class="term" tabindex="0">loop<span class="term-pop">A block that repeats a set of instructions, such as <code>for</code> or <code>while</code>, until a condition is met.</span></span>.
+      A <span class="term" tabindex="0">variable<span class="term-pop">A named container that stores a value, such as a number or piece of text, which can change while the program runs.</span></span>
+      holds the values these decisions and loops act on.
+    </p>
+  </section>
+
+  <section class="step">
+    <span class="step-label">Step 2 — See it in code</span>
+    <h2>A loop and a conditional together</h2>
+    <p>This short program checks each number from 1 to 5 and prints whether it's even or odd — a loop doing the repeating, a conditional doing the deciding.</p>
+    <pre class="code"><span class="cm">// prints even/odd for numbers 1 to 5</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = 1; i <= 5; i++) {
+    <span class="kw">if</span> (i % 2 == 0) {
+        System.out.println(i + " is even");
+    } <span class="kw">else</span> {
+        System.out.println(i + " is odd");
+    }
+}</pre>
+  </section>
+
+  <section class="step">
+    <span class="step-label">Step 3 — Understand</span>
+    <h2>How the pieces connect</h2>
+    <p>The concept map below shows the relationship between the four terms — a method contains the logic; loops and conditionals control flow inside it; variables hold the state they act on.</p>
+    <div class="mapwrap">
+      <svg class="map" viewBox="0 0 640 220" width="100%" style="max-width:640px">
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#5B564C"/>
+          </marker>
+        </defs>
+        <line x1="150" y1="45" x2="150" y2="90" stroke="#5B564C" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="235" y1="115" x2="290" y2="115" stroke="#5B564C" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="150" y1="145" x2="150" y2="175" stroke="#5B564C" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="70" y="14" width="160" height="34" rx="17" fill="#E1EEEC" stroke="#1E6B67"/>
+        <text x="150" y="35" text-anchor="middle" font-size="13" fill="#134E4B" font-weight="600">method</text>
+
+        <rect x="70" y="94" width="160" height="34" rx="6" fill="#F1E3C4" stroke="#B98A2E"/>
+        <text x="150" y="115" text-anchor="middle" font-size="13" fill="#7A5B1E" font-weight="600">loop</text>
+
+        <rect x="290" y="94" width="180" height="34" rx="6" fill="#F1E3C4" stroke="#B98A2E"/>
+        <text x="380" y="115" text-anchor="middle" font-size="13" fill="#7A5B1E" font-weight="600">conditional</text>
+
+        <rect x="70" y="178" width="160" height="34" rx="17" fill="#EFE8D8" stroke="#2A2823"/>
+        <text x="150" y="199" text-anchor="middle" font-size="13" fill="#2A2823" font-weight="600">variable</text>
+
+        <text x="245" y="150" font-size="11.5" fill="#5B564C">repeats while condition holds</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="step">
+    <span class="step-label">Step 4 — Apply</span>
+    <h2>Check your understanding</h2>
+    <div class="quiz" id="quiz">
+      <h3>Quick check</h3>
+      <div class="progress" id="qprogress">Question 1 of 3</div>
+      <div id="qbody"></div>
+      <div class="quiz-result" id="qresult">
+        <div class="score" id="qscore"></div>
+        <p style="color:var(--ink-soft);margin:4px 0 14px;">Nice work — that's the core loop/conditional relationship covered.</p>
+        <button class="quiz-btn" onclick="restartQuiz()">Try again</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="site">Maheshwari S — Instructional Design Portfolio</footer>
+
+<script>
+  document.querySelectorAll('.term').forEach(t => {
+    t.addEventListener('click', () => {
+      const wasOpen = t.classList.contains('open');
+      document.querySelectorAll('.term.open').forEach(o => o.classList.remove('open'));
+      if (!wasOpen) t.classList.add('open');
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.term')) {
+      document.querySelectorAll('.term.open').forEach(o => o.classList.remove('open'));
+    }
+  });
+
+  const QUESTIONS = [
+    {
+      q: "Which structure would you use to repeat an action for every item in a list of 10 numbers?",
+      opts: ["Method", "Loop", "Variable"],
+      correct: 1,
+      why: "A loop repeats a block of code — exactly what's needed to go through each item."
+    },
+    {
+      q: "In the code sample, what decides whether a number prints as \u201Ceven\u201D or \u201Codd\u201D?",
+      opts: ["The for loop", "The variable declaration", "The if/else conditional"],
+      correct: 2,
+      why: "The if/else conditional checks i % 2 == 0 and branches the output accordingly."
+    },
+    {
+      q: "What does the variable \u2018i\u2019 in the loop actually do?",
+      opts: ["Stores and updates the current number being checked", "Defines the method name", "Prints text to the screen"],
+      correct: 0,
+      why: "\u2018i\u2019 holds the current count, updated each pass through the loop."
+    }
+  ];
+
+  let qi = 0, score = 0;
+
+  function renderQuestion(){
+    const el = document.getElementById('qbody');
+    const q = QUESTIONS[qi];
+    document.getElementById('qprogress').textContent = `Question ${qi+1} of ${QUESTIONS.length}`;
+    el.innerHTML = `
+      <div class="q-text">${q.q}</div>
+      <div class="opts">
+        ${q.opts.map((o,i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+      <button class="quiz-btn" id="nextBtn" disabled>Next</button>
+    `;
+    document.querySelectorAll('.opt').forEach(btn => {
+      btn.addEventListener('click', () => selectOpt(btn, q));
+    });
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+  }
+
+  function selectOpt(btn, q){
+    const i = Number(btn.dataset.i);
+    document.querySelectorAll('.opt').forEach(o => o.disabled = true);
+    if (i === q.correct){
+      btn.classList.add('correct');
+      score++;
+      document.getElementById('fb').textContent = "Correct — " + q.why;
+    } else {
+      btn.classList.add('wrong');
+      document.querySelectorAll('.opt')[q.correct].classList.add('correct');
+      document.getElementById('fb').textContent = "Not quite — " + q.why;
+    }
+    document.getElementById('nextBtn').disabled = false;
+  }
+
+  function nextQuestion(){
+    qi++;
+    if (qi < QUESTIONS.length){
+      renderQuestion();
+    } else {
+      document.getElementById('qbody').style.display = 'none';
+      document.getElementById('qprogress').style.display = 'none';
+      const res = document.getElementById('qresult');
+      res.style.display = 'block';
+      document.getElementById('qscore').textContent = `${score} / ${QUESTIONS.length}`;
+    }
+  }
+
+  function restartQuiz(){
+    qi = 0; score = 0;
+    document.getElementById('qbody').style.display = 'block';
+    document.getElementById('qprogress').style.display = 'block';
+    document.getElementById('qresult').style.display = 'none';
+    renderQuestion();
+  }
+
+  renderQuestion();
+</script>
+</body>
+</html>
